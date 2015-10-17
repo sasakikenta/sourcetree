@@ -9,19 +9,15 @@
 | 方法は簡単です。対応するURIをLaravelに指定してください。
 | そしてそのURIに対応する実行コードをクロージャーで指定します。
 |
-*//*
+*/
 Route::get('/', function()
 {
 	return View::make('hello');
-});*/
-
-
-Route::get('/', function()
-{
-	return "hello world";
 });
+
 Route::get('/magic', function()
 {
+	Log::info('例1-1:テキストを返す');
 	return "マジカルlaravel";
 });
 Route::get('/user/sasaki', function()
