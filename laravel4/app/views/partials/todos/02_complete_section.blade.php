@@ -24,7 +24,7 @@
 							{{ Form::close() }}
 						</td>
 						<td>
-							{{ date_string($todo->completed_at) }}
+							{{ $todo->completed_at }}
 						</td>
 						<td class="btn-group">
 							{{ Form::open(['url' => route('todos.delete', $todo->id)]) }}

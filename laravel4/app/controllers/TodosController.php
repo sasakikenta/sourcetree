@@ -40,8 +40,11 @@ class TodosController extends BaseController
     $query = Todo::query()->select('*')->where('status', '=', Todo::STATUS_INCOMPLETE)->orderBy('updated_at', 'desc');
     $incompleteTodos = $query->get();
 
-    $completeTodos = Todo::whereStaus(Todo::STATUS_COMPLETE)->orderBy('updated_at', 'desc')->get();
-
+    $query = Todo::query()->select('*')->where('status', '=', Todo::STATUS_COMPLETE)->orderBy('updated_at', 'desc');
+    //$completeTodos = Todo::whereStaus(Todo::STATUS_COMPLETE)->get();
+    $completeTodos = $query->get();
+    Log::debug(print_r($incompleteTodos, true));
+    Log::debug(print_r($completeTodos, true));
     $trashedTodos = Todo::onlyTrashed()->get();
 
     return View::make('pages.todos.index', compact('incompleteTodos', 'completeTodos', 'trashedTodos'));
@@ -81,6 +84,8 @@ class TodosController extends BaseController
     ];
     // 入力データを取得する
     // MEMO $inputの内容をログに出力して確認してみる。dummyキーはあるが値は空(null)になっている。
+    Log::debug("aaaa");
+    Log::debug(print_r($todo));
     $input = Input::only(array_keys($rules));
     Log::debug(print_r($input, true));
     // バリデーションを実行する
@@ -96,11 +101,12 @@ class TodosController extends BaseController
       ]);
     }
     // statusが指定されていたら
+    Log::debug($input['status']);
     if ($input['status'] !== null) {
       // statusとcompleted_atカラムを更新する
       $todo->fill([
         'status' => $input['status'],
-        'completed_at' => $input['status'] == Todo::STATUS_COMPLETE ? new DateTime : null,
+        'completed_at' => ($input['status'] == Todo::STATUS_COMPLETE) ? new DateTime : null,
       ]);
     }
     // データを更新する（SQL発行）

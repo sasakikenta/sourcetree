@@ -21,12 +21,12 @@
 						</td>
 						<td>
 @if ($todo->completed_at)
-							{{ date_string($todo->completed_at) }}
+							{{ $todo->completed_at }}
 @else
 @endif
 						</td>
 						<td>
-							{{ date_string($todo->updated_at) }}
+							{{ $todo->updated_at }}
 						</td>
 						<td class="btn-group">
 							{{ Form::open(['url' => route('todos.restore', $todo->id)]) }}
