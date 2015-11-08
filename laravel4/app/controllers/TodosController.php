@@ -40,9 +40,9 @@ class TodosController extends BaseController
     $query = Todo::query()->select('*')->where('status', '=', Todo::STATUS_INCOMPLETE)->orderBy('updated_at', 'desc');
     $incompleteTodos = $query->get();
 
-    $query = Todo::query()->select('*')->where('status', '=', Todo::STATUS_COMPLETE)->orderBy('updated_at', 'desc');
-    //$completeTodos = Todo::whereStaus(Todo::STATUS_COMPLETE)->get();
-    $completeTodos = $query->get();
+    //$query = Todo::query()->select('*')->where('status', '=', Todo::STATUS_COMPLETE)->orderBy('updated_at', 'desc');
+    $completeTodos = Todo::whereStatus(Todo::STATUS_COMPLETE)->orderBy('updated_at', 'desc')->get();
+    //$completeTodos = $query->get();
     Log::debug(print_r($incompleteTodos, true));
     Log::debug(print_r($completeTodos, true));
     $trashedTodos = Todo::onlyTrashed()->get();
